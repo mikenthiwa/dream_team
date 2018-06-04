@@ -20,15 +20,42 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('home.homepage') }}">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
-      </li>
+      {% if current_user.is_authenticated %}
+      {% if current_user.is_admin %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('home.admin_dashboard') }}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="#">Departments <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="#">Roles <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="#">Employees <span class="sr-only">(current)</span></a>
+        </li>
+      {% else %}
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('home.dashboard') }}">Home <span class="sr-only">(current)</span></a>
+        </li>
+      {% endif %}
+
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout <span class="sr-only">(current)</span></a>
+        </li>
+        <li><a><i class="fa fa-user"></i>  Hi, {{ current_user.username }}!</a></li>
+      {% else %}
+
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('home.homepage') }}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.register') }}">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('auth.login') }}">Login</a>
+        </li>
+      {% endif %}
     </ul>
   </div>
 </nav>
